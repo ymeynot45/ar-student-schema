@@ -2,6 +2,8 @@ require_relative '../../db/config'
 
 class Student < ActiveRecord::Base
 
+  belongs_to :teacher
+
   validates :email, :uniqueness => :true
   validates :email, :format => { :with => /.+@.+\...+/, 
       :message => "Not a valid email."}
@@ -10,6 +12,10 @@ class Student < ActiveRecord::Base
       
   # validates :birthday, :numericality => { :greater_than }
   validates :age, :numericality => {:greater_than => 4}
+
+  def assign_teacher(t)
+    self.teacher = t
+  end
 
   def name
     "#{first_name} #{last_name}"
